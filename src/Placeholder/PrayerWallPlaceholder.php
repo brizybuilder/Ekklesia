@@ -189,7 +189,7 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
                 'Submit a Prayer Request',
                 true,
                 [
-                    '<button type="button" class="brz-ministryBrands-PrayingForm-btn" data-dismiss="modal">Close</button>',
+                    '<button type="button" class="brz-ministryBrands-PrayingForm-btn" data-dismiss="modal">Cancel</button>',
                     '<button id="ekklesia360-prayer-submit" type="submit" name="submit" class="brz-ministryBrands-PrayingForm-btn">Submit</button>'
                 ]
             );
