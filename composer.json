@@ -1,5 +1,5 @@
 {
-  "name": "bagrinsergiu/ekklesia",
+  "name": "brizybuilder/ekklesia",
   "description": "Placeholders and integrations with https://www.ekklesia360.com/ - ministrybrands",
   "type": "library",
   "authors": [
@@ -11,8 +11,8 @@
   "require": {
     "php": ">=5.6.0",
     "twig/twig": "^1.0||^2.0",
-    "bagrinsergiu/monkcms-php": "^1.0",
-    "bagrinsergiu/content-placeholder": "^3.0",
+    "brizybuilder/monkcms-php": "^1.0",
+    "brizybuilder/content-placeholder": "^3.0",
     "kigkonsult/icalcreator": "^2.39"
   },
   "require-dev": {
@@ -26,11 +26,11 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/bagrinsergiu/monkcms-php.git"
+      "url": "https://github.com/brizybuilder/monkcms-php.git"
     },
     {
       "type": "vcs",
-      "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git"
+      "url": "https://github.com/brizybuilder/brizy-content-placeholder.git"
     }
   ]
 }
