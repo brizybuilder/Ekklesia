@@ -23,7 +23,7 @@ class PrayerFormPlaceholder extends PlaceholderAbstract
         echo '<!-- Response Section -->
         <div id="sfprayerresponse" class="brz-ministryBrands-PrayerForm-response" style="display: none;">';
         
-        PrayingFormRenderer::renderResponseModalContent('Thank you for your prayer request. Your prayer is pending approval.', 'Create Another Prayer Request', false);
+        PrayingFormRenderer::renderResponseModalContent();
         
         echo '</div>';
     }
