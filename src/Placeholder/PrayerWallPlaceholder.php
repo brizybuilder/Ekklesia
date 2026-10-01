@@ -44,7 +44,8 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
     }
 
     /**
-     * Format a US phone number as 555-555-5555.
+     * Format a US phone number as 555-555-5555, or +1 555-555-5555 when the
+     * submitter included the country code.
      *
      * Submitters type phone numbers freely, so anything that isn't a plain US
      * number (short numbers, international, extensions) is returned untouched
@@ -56,17 +57,19 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
     private static function formatPhone($phone)
     {
         $digits = preg_replace('/\D/', '', (string) $phone);
+        $prefix = '';
 
-        // Strip the US country code so +1 (555) 555-5555 formats like the rest.
+        // Keep the US country code when it was typed: +1 (555) 555-5555.
         if (strlen($digits) === 11 && $digits[0] === '1') {
             $digits = substr($digits, 1);
+            $prefix = '+1 ';
         }
 
         if (strlen($digits) !== 10) {
             return (string) $phone;
         }
 
-        return substr($digits, 0, 3) . '-' . substr($digits, 3, 3) . '-' . substr($digits, 6);
+        return $prefix . substr($digits, 0, 3) . '-' . substr($digits, 3, 3) . '-' . substr($digits, 6);
     }
 
     private function buildPlaceholderString(array $settings): string
@@ -443,14 +446,17 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
                 . ' hx-swap="outerHTML"';
         };
 
+        // Prev/next carry a modifier so the arrows can be sized up on their own.
+        $arrowClass = 'brz-ministryBrandsPrayerWall__pagination-link brz-ministryBrandsPrayerWall__pagination-link--arrow';
+
         echo '<nav>';
         echo '<ul class="brz-ministryBrandsPrayerWall__pagination-list">';
 
         echo '<li class="brz-ministryBrandsPrayerWall__pagination-item">';
         if ($currentPage > 1) {
-            echo '<button class="brz-ministryBrandsPrayerWall__pagination-link" ' . $htmxAttrs($currentPage - 1) . '>&lsaquo;</button>';
+            echo '<button class="' . $arrowClass . '" aria-label="Previous page" ' . $htmxAttrs($currentPage - 1) . '>&lsaquo;</button>';
         } else {
-            echo '<button class="brz-ministryBrandsPrayerWall__pagination-link" disabled>&lsaquo;</button>';
+            echo '<button class="' . $arrowClass . '" aria-label="Previous page" disabled>&lsaquo;</button>';
         }
         echo '</li>';
 
@@ -468,9 +474,9 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
 
         echo '<li class="brz-ministryBrandsPrayerWall__pagination-item">';
         if ($currentPage < $totalPages) {
-            echo '<button class="brz-ministryBrandsPrayerWall__pagination-link" ' . $htmxAttrs($currentPage + 1) . '>&rsaquo;</button>';
+            echo '<button class="' . $arrowClass . '" aria-label="Next page" ' . $htmxAttrs($currentPage + 1) . '>&rsaquo;</button>';
         } else {
-            echo '<button class="brz-ministryBrandsPrayerWall__pagination-link" disabled>&rsaquo;</button>';
+            echo '<button class="' . $arrowClass . '" aria-label="Next page" disabled>&rsaquo;</button>';
         }
         echo '</li>';
 
@@ -483,7 +489,10 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
         echo '<a id="ack-btn-' . self::escapeAttr($prayerId) . '" class="brz-ministryBrandsPrayerWall__ack-button"';
         echo ' data-link="' . self::escapeAttr($ackRequestUrl) . '"';
         echo '>';
-        echo '<svg xmlns="http://www.w3.org/2000/svg" class="brz-ministryBrandsPrayerWall__ack-icon" viewBox="0 0 16 12.891" fill="currentColor">';
+        // viewBox hugs the path's bounding box (the old 0 0 16 12.891 clipped
+        // the bottom and left uneven padding), so the SVG box is exactly the
+        // drawn icon and the CSS can line it up with the count's digits.
+        echo '<svg xmlns="http://www.w3.org/2000/svg" class="brz-ministryBrandsPrayerWall__ack-icon" viewBox="0.222 1.032 15.558 12.452" fill="currentColor">';
         echo '<path d="M8.755 1.149a.8.8 0 0 1 .583-.097c.194.049.365.17.462.34l2.917 4.376c.219.316.34.681.34 1.07v1.799c0 .146.097.316.243.365l1.945.632a.78.78 0 0 1 .535.729v2.334c0 .243-.122.486-.316.632s-.438.194-.681.122l-4.084-1.094A3.096 3.096 0 0 1 8.39 9.366V6.473c0-.413.34-.778.778-.778a.8.8 0 0 1 .778.778v1.945c0 .219.17.389.389.389a.4.4 0 0 0 .389-.389V6.376c0-.17-.049-.34-.146-.486L8.487 2.219c-.049-.073-.073-.17-.097-.243a.8.8 0 0 1 0-.34.8.8 0 0 1 .365-.486zm-1.531 0a.8.8 0 0 1 .365.486.8.8 0 0 1 0 .34c-.024.073-.049.17-.097.243L5.4 5.89a.86.86 0 0 0-.122.486v2.042c0 .219.17.389.389.389a.4.4 0 0 0 .389-.389V6.473c0-.413.34-.778.778-.778a.8.8 0 0 1 .778.778v2.893c0 1.41-.948 2.625-2.309 2.99L1.195 13.45c-.243.073-.486.024-.681-.122s-.292-.389-.292-.632v-2.333c0-.316.194-.632.51-.729l1.945-.632c.146-.073.267-.219.267-.389V6.838c0-.389.097-.754.316-1.07l2.918-4.375a.73.73 0 0 1 .802-.34c.097.024.17.049.243.097z"/>';
         echo '</svg>';
 
