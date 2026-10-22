@@ -65,11 +65,12 @@ class ArticleLayoutPlaceholder extends PlaceholderAbstract
         $detail_url  = $detail_page ? $this->replacer->replacePlaceholders(urldecode($detail_page), $context) : '';
         $page        = isset($_GET['mc-page']) ? $_GET['mc-page'] : 1;
 
-        $categories        = $cms->get(['module' => 'article', 'display' => 'categories']);
-        $categories_parent = $cms->get(['module' => 'article', 'display' => 'categories', 'parent_category' => $parent_category,]);
+        // the api omits empty lists; default them so usort()/count() below always get arrays
+        $categories        = ($cms->get(['module' => 'article', 'display' => 'categories']) ?: []) + ['show' => [], 'level3' => []];
+        $categories_parent = ($cms->get(['module' => 'article', 'display' => 'categories', 'parent_category' => $parent_category,]) ?: []) + ['level1' => []];
         $groups            = $cms->get(['module' => 'article', 'display' => 'list', 'groupby' => 'group', 'find_parent_category' => $parent_category,]);
-        $series            = $cms->get(['module' => 'article', 'display' => 'list', 'groupby' => 'series', 'find_parent_category' => $parent_category,]);
-        $authors           = $cms->get(['module' => 'article', 'display' => 'list', 'groupby' => 'author', 'find_parent_category' => $parent_category,]);
+        $series            = ($cms->get(['module' => 'article', 'display' => 'list', 'groupby' => 'series', 'find_parent_category' => $parent_category,]) ?: []) + ['group_show' => []];
+        $authors           = ($cms->get(['module' => 'article', 'display' => 'list', 'groupby' => 'author', 'find_parent_category' => $parent_category,]) ?: []) + ['group_show' => []];
 
         if (isset($_GET['mc-search_term'])) {
             $content    = [];
@@ -547,7 +548,7 @@ class ArticleLayoutPlaceholder extends PlaceholderAbstract
     {
         $results = [];
         foreach ($items as $item) {
-            $pieces        = explode(", ", $item["category"]);
+            $pieces        = explode(", ", $item["category"] ?? '');
             $categoriesArr = [];
             $count         = 1;
 

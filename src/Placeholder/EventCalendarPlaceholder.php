@@ -83,8 +83,8 @@ class EventCalendarPlaceholder extends PlaceholderAbstract
             <?php
             if (!empty($content['show'])) {
                 foreach ($content["show"] as $show) {
-                    $grouping_month                           = date("Y-m", strtotime($show["eventstart"]));
-                    $grouping_day                             = date("Y-m-d", strtotime($show["eventstart"]));
+                    $grouping_month                           = date("Y-m", strtotime($show["eventstart"] ?? ''));
+                    $grouping_day                             = date("Y-m-d", strtotime($show["eventstart"] ?? ''));
                     $events[$grouping_month][$grouping_day][] = $show;//set first dimension to day and then assign all events as second level to that day
                 }
                 ?>
@@ -168,7 +168,7 @@ class EventCalendarPlaceholder extends PlaceholderAbstract
 
 
             //if no output nrf
-            if (count($events[$month_format]) < 1) {
+            if (empty($events[$month_format])) {
                 $results .= "<h4 class=\"brz-eventCalendar-nrf\">There are no events for this month.</h4>";
             } //else results
             else {

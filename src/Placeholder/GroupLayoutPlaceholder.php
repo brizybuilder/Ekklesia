@@ -332,15 +332,15 @@ class GroupLayoutPlaceholder extends PlaceholderAbstract
                     <?php
                     foreach ($resultsPagination as $key => $item) {
                         //remove 12am
-                        if (strtolower($item['starttime']) == "12 am" || strtolower($item['starttime']) == "12:00am") {
+                        if (strtolower($item['starttime'] ?? '') == "12 am" || strtolower($item['starttime'] ?? '') == "12:00am") {
                             $item['starttime'] = false;
                         }
-                        if (strtolower($item['endtime']) == "12 am" || strtolower($item['endtime']) == "12:00am") {
+                        if (strtolower($item['endtime'] ?? '') == "12 am" || strtolower($item['endtime'] ?? '') == "12:00am") {
                             $item['endtime'] = false;
                         }
                         //remove site group
-                        $item['group'] = str_replace("Site Group, ", "", $item['group']);
-                        $item['group'] = str_replace("Site Group", "", $item['group']);
+                        $item['group'] = str_replace("Site Group, ", "", $item['group'] ?? '');
+                        $item['group'] = str_replace("Site Group", "", $item['group'] ?? '');
 
                         echo "<div class=\"brz-groupLayout--item\">";
                         echo "<div class=\"brz-groupLayout--item__content\">";
@@ -492,7 +492,7 @@ class GroupLayoutPlaceholder extends PlaceholderAbstract
     {
         $results = [];
         foreach ($groups as $group) {
-            $pieces  = explode(", ", $group["category"]);
+            $pieces  = explode(", ", $group["category"] ?? '');
             $matches = array_intersect($pieces, $categories);
 
             if (count($matches) > 0) {

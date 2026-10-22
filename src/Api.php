@@ -16,7 +16,7 @@ class Api
 	 */
 	private $prayerCloudApi;
 
-	public function __construct(MonkCms $monkCms, PrayerCloudApi $prayerCloudApi = null)
+	public function __construct(MonkCms $monkCms, ?PrayerCloudApi $prayerCloudApi = null)
 	{
 		$this->monkCms = $monkCms;
 		$this->prayerCloudApi = $prayerCloudApi;

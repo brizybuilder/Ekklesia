@@ -49,7 +49,7 @@ class Placeholders
      */
     private $prayerCloudApi;
 
-    public function __construct(MonkCms $monkCms, Twig_Environment $twig, PrayerCloudApi $prayerCloudApi = null)
+    public function __construct(MonkCms $monkCms, Twig_Environment $twig, ?PrayerCloudApi $prayerCloudApi = null)
     {
         $this->monkCms        = $monkCms;
         $this->twig           = $twig;
