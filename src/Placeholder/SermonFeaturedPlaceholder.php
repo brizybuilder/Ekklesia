@@ -55,6 +55,7 @@ class SermonFeaturedPlaceholder extends PlaceholderAbstract
         $series             = $settings['series'] != 'all' ? $settings['series'] : '';
         $detail_url         = $settings['detail_page'] ? $this->replacer->replacePlaceholders(urldecode($settings['detail_page']), $context) : false;
         $slug               = false;
+        $content            = [];
 
         if ($features) {
             $nonfeatures = '';
@@ -94,13 +95,13 @@ class SermonFeaturedPlaceholder extends PlaceholderAbstract
                 'emailencode' => 'no',
                 'show'        => "__videoplayer fullscreen='true'__",
                 'show'        => "__audioplayer__",
-            ])['show'];
+            ])['show'] ?? [];
         }
 ?>
 
 
         <?php //output
-        if (count($content) > 0) {
+        if (!empty($content)) {
             $item = $content;
         ?>
 

@@ -119,8 +119,8 @@ class EventFeaturedPlaceholder extends PlaceholderAbstract
                 echo "</h4>";
             }
             if ($show_date) {
-                $starttime = date($date_format, strtotime($item['eventstart']));
-                $endtime = date($date_format, strtotime($item['eventend']));
+                $starttime = date($date_format, strtotime($item['eventstart'] ?? ''));
+                $endtime = date($date_format, strtotime($item['eventend'] ?? ''));
                 $frequency = $item['eventtimesremarks'];
 
                 echo "<h5 class=\"brz-eventFeatured__item--meta--date brz-ministryBrands__item--meta-date\">{$frequency}, {$starttime} - {$endtime}</h5>";

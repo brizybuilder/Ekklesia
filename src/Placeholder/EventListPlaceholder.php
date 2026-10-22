@@ -80,7 +80,7 @@ class EventListPlaceholder extends PlaceholderAbstract
                 <?php
                 foreach ($content['show'] as $key => $item) {
                     //__id__-__eventstart format='Y-m-d'__-__slug__
-                    $slugDate = date("Y-m-d", strtotime($item["eventstart"]));
+                    $slugDate = date("Y-m-d", strtotime($item["eventstart"] ?? ''));
                     $slug = "{$item['id']}-$slugDate-{$item['slug']}";
 
                     echo "<div class=\"brz-eventList__item\">";
@@ -106,8 +106,8 @@ class EventListPlaceholder extends PlaceholderAbstract
                             else echo "<span>Date: </span>";
                         }
                         
-                        $starttime = date($date_format, strtotime($item['eventstart']));
-                        $endtime = date($date_format, strtotime($item['eventend']));
+                        $starttime = date($date_format, strtotime($item['eventstart'] ?? ''));
+                        $endtime = date($date_format, strtotime($item['eventend'] ?? ''));
                         $frequency = $item['eventtimesremarks'];
 
                         echo "<span>{$frequency}, {$starttime} - {$endtime}</span>";

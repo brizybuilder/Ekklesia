@@ -27,7 +27,7 @@ class SermonListPlaceholder extends PlaceholderAbstract
             'display'       => 'list',
             'order'         => 'recent',
             'emailencode'   => 'no',
-            'howmany'       => isset($attributes['howmany']) ? intval(round($attributes['howmany'])) : 9,
+            'howmany'       => isset($attributes['howmany']) && is_numeric($attributes['howmany']) ? (int) round($attributes['howmany']) : 9,
             'page'          => isset($_GET['mc-page']) ? $_GET['mc-page'] : 1,
             'find_category' => (isset($attributes['category']) && $attributes['category'] != 'all') ? $attributes['category'] : '',
             'find_group'    => (isset($attributes['group']) && $attributes['group'] != 'all') ? $attributes['group'] : '',
@@ -77,7 +77,8 @@ class SermonListPlaceholder extends PlaceholderAbstract
                     'sticky_space'            => $attributes['sticky_space'] ? (int)$attributes['sticky_space'] : '0',
                     'show_meta_icons'         => $attributes['show_meta_icons']
                 ]
-            )
+            ),
+            ENT_COMPAT | ENT_HTML401
         );
     }
 }

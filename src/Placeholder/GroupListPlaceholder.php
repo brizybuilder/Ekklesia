@@ -71,15 +71,15 @@ class GroupListPlaceholder extends PlaceholderAbstract
                 <?php
                 foreach ($content['show'] as $key => $item) {
                     //remove 12am
-                    if (strtolower($item['starttime']) == "12 am" || strtolower($item['starttime']) == "12:00am") {
+                    if (strtolower($item['starttime'] ?? '') == "12 am" || strtolower($item['starttime'] ?? '') == "12:00am") {
                         $item['starttime'] = false;
                     }
-                    if (strtolower($item['endtime']) == "12 am" || strtolower($item['endtime']) == "12:00am") {
+                    if (strtolower($item['endtime'] ?? '') == "12 am" || strtolower($item['endtime'] ?? '') == "12:00am") {
                         $item['endtime'] = false;
                     }
                     //remove site group
-                    $item['group'] = str_replace("Site Group, ", "", $item['group']);
-                    $item['group'] = str_replace("Site Group", "", $item['group']);
+                    $item['group'] = str_replace("Site Group, ", "", $item['group'] ?? '');
+                    $item['group'] = str_replace("Site Group", "", $item['group'] ?? '');
 
                     echo "<div class='brz-groupList__item'>";
                     if ($show_images && $item['imageurl']) {

@@ -56,8 +56,9 @@ class CustomPagination
     public function __construct($array, $curPage = null, $perPage = null)
     {
         $this->array = $array;
-        $this->curPage = ($curPage == null ? $this->defaults['page'] : $curPage);
-        $this->perPage = ($perPage == null ? $this->defaults['perPage'] : $perPage);
+        // cast so the arithmetic in getResults() never sees a non-numeric string or zero (TypeError/DivisionByZeroError on PHP 8)
+        $this->curPage = max(1, (int) ($curPage == null ? $this->_defaults['page'] : $curPage));
+        $this->perPage = max(1, (int) ($perPage == null ? $this->_defaults['perPage'] : $perPage));
     }
 
     /**

@@ -82,15 +82,15 @@ class GroupFeaturedPlaceholder extends PlaceholderAbstract
             $item = $content;
 
             //remove 12am
-            if (strtolower($item['starttime']) == "12 am" || strtolower($item['starttime']) == "12:00am") {
+            if (strtolower($item['starttime'] ?? '') == "12 am" || strtolower($item['starttime'] ?? '') == "12:00am") {
                 $item['starttime'] = false;
             }
-            if (strtolower($item['endtime']) == "12 am" || strtolower($item['endtime']) == "12:00am") {
+            if (strtolower($item['endtime'] ?? '') == "12 am" || strtolower($item['endtime'] ?? '') == "12:00am") {
                 $item['endtime'] = false;
             }
             //remove site group
-            $item['group'] = str_replace("Site Group, ", "", $item['group']);
-            $item['group'] = str_replace("Site Group", "", $item['group']);
+            $item['group'] = str_replace("Site Group, ", "", $item['group'] ?? '');
+            $item['group'] = str_replace("Site Group", "", $item['group'] ?? '');
         ?>
 
             <div class="brz-groupFeatured__item">

@@ -22,15 +22,19 @@ class PrayerWallPlaceholder extends PlaceholderAbstract
      */
     protected $prayerCloudApi;
 
+    /**
+     * @var string
+     */
+    private $endpointUrl = '/m-b/placeholder/render';
+
     public function __construct(
         MonkCms $monkCMS,
         Twig_Environment $twig,
-        Replacer $replacer = null,
-        PrayerCloudApi $prayerCloudApi = null
+        ?Replacer $replacer = null,
+        ?PrayerCloudApi $prayerCloudApi = null
     ) {
         parent::__construct($monkCMS, $twig, $replacer);
         $this->prayerCloudApi = $prayerCloudApi;
-        $this->endpointUrl = '/m-b/placeholder/render';
     }
 
     private static function escapeHtml($text)

@@ -17,7 +17,7 @@ class EkklesiaConfig
     /**
      * @var string
      */
-    private $url;
+    private $apiUrl;
 
 	/**
      * @var string

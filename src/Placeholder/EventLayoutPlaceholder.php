@@ -475,11 +475,11 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
 
                         foreach ($content['show'] as $key => $item) {
                             //__id__-__eventstart format='Y-m-d'__-__slug__
-                            $slugDate = date("Y-m-d", strtotime($item["eventstart"]));
+                            $slugDate = date("Y-m-d", strtotime($item["eventstart"] ?? ''));
                             $slug     = "{$item['id']}-$slugDate-{$item['slug']}";
 
                             if ($detail_url) {
-                                $item["url"] = str_replace('/event/', "{$detail_url}?mc-slug=", $item['url']);
+                                $item["url"] = str_replace('/event/', "{$detail_url}?mc-slug=", $item['url'] ?? '');
                             }
 
                             echo "<div class=\"brz-eventLayout--featured__item\">";
@@ -520,8 +520,8 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
                             }
 
                             if ($show_date_featured) {
-                                $starttime = date($date_format, strtotime($item['eventstart']));
-                                $endtime   = date($date_format, strtotime($item['eventend']));
+                                $starttime = date($date_format, strtotime($item['eventstart'] ?? ''));
+                                $endtime   = date($date_format, strtotime($item['eventend'] ?? ''));
                                 $frequency = $item['eventtimesremarks'];
 
                                 echo "<p class=\"brz-eventLayout--featured__meta brz-ministryBrands__item--meta-date\">{$frequency}, {$starttime} - {$endtime}</p>";
@@ -559,8 +559,8 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
                     $listHtml = '';
                     if (isset($content['show']) && count($content['show']) > 0) {
                         foreach ($content["show"] as $show) {
-                            $grouping_month                           = date("Y-m", strtotime($show["eventstart"]));
-                            $grouping_day                             = date("Y-m-d", strtotime($show["eventstart"]));
+                            $grouping_month                           = date("Y-m", strtotime($show["eventstart"] ?? ''));
+                            $grouping_day                             = date("Y-m-d", strtotime($show["eventstart"] ?? ''));
                             $events[$grouping_month][$grouping_day][] = $show;//set first dimension to day and then assign all events as second level to that day
                         }
 
@@ -585,8 +585,8 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
                     if (!empty($content['show'])) {
                         //iterate over each event and assign to month and day
                         foreach ($content["show"] as $show) {
-                            $grouping_month                           = date("Y-m", strtotime($show["eventstart"]));
-                            $grouping_day                             = date("Y-m-d", strtotime($show["eventstart"]));
+                            $grouping_month                           = date("Y-m", strtotime($show["eventstart"] ?? ''));
+                            $grouping_day                             = date("Y-m-d", strtotime($show["eventstart"] ?? ''));
                             $events[$grouping_month][$grouping_day][] = $show;//set first dimension to day and then assign all events as second level to that day
                         }
 
@@ -614,7 +614,7 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
         $results = [];
         foreach ($items as $item) {
 
-            $pieces        = explode(", ", $item["category"]);
+            $pieces        = explode(", ", $item["category"] ?? '');
             $categoriesArr = [];
             $count         = 1;
             foreach ($pieces as $piece) {
@@ -699,7 +699,7 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
                         </h3>";
                     //iterate event
                     foreach ($val as $v) {
-                        $slugDate = date("Y-m-d", strtotime($v["eventstart"]));
+                        $slugDate = date("Y-m-d", strtotime($v["eventstart"] ?? ''));
                         $slug     = "{$v['id']}-$slugDate-{$v['slug']}";
                         if ($detail_url) {
                             $v["url"] = str_replace('/event/', "{$detail_url}?mc-slug=", $v['url']);
@@ -708,10 +708,10 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
                         $results .= "<div class=\"brz-eventLayout--list-item__content-date\">";
                         $results .= "<div>";
                         $results .= "<span class=\"day\">";
-                        $results .= date("d", strtotime($v["eventstart"]));
+                        $results .= date("d", strtotime($v["eventstart"] ?? ''));
                         $results .= "</span>";
                         $results .= "<span class=\"month\">";
-                        $results .= date("M", strtotime($v["eventstart"]));
+                        $results .= date("M", strtotime($v["eventstart"] ?? ''));
                         $results .= "</span>";
                         $results .= "</div>";
                         $results .= "</div>";
@@ -730,9 +730,9 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
                         if ($v["isallday"]) {
                             $results .= "All Day";
                         } else {
-                            $results .= date("l, {$date_format}", strtotime($v["eventstart"]));
+                            $results .= date("l, {$date_format}", strtotime($v["eventstart"] ?? ''));
                             $results .= " - ";
-                            $results .= date($date_format, strtotime($v["eventend"]));
+                            $results .= date($date_format, strtotime($v["eventend"] ?? ''));
                         }
 
                         if ($v["isrecurring"]) {
@@ -806,7 +806,7 @@ class EventLayoutPlaceholder extends PlaceholderAbstract
             $results .= "</div>";
 
             //if no output nrf
-            if (count($events[$month_format]) < 1) {
+            if (empty($events[$month_format])) {
                 $results .= "<h4 class=\"nrf\">There are no events for this month.</h4>";
             } //else results
             else {

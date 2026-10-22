@@ -32,7 +32,7 @@ abstract class PlaceholderAbstract extends AbstractPlaceholder
      */
     protected $replacer;
 
-    public function __construct(MonkCms $monkCMS, Twig_Environment $twig, Replacer $replacer = null)
+    public function __construct(MonkCms $monkCMS, Twig_Environment $twig, ?Replacer $replacer = null)
     {
         $this->twig     = $twig;
         $this->monkCMS  = $monkCMS;

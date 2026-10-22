@@ -63,7 +63,7 @@ class SermonLayoutPlaceholder extends PlaceholderAbstract
         $filterCount     = count(array_filter($filterCountArr));
         $detail_url      = $settings['detail_page'] ? $this->replacer->replacePlaceholders(urldecode($settings['detail_page']), $context) : false;
         $cms             = $this->monkCMS;
-        $page            = isset($_GET['mc-page']) ? $_GET['mc-page'] : 1;
+        $page            = max(1, (int) ($_GET['mc-page'] ?? 1));
         $category_filter = isset($_GET['mc-category']) ? $_GET['mc-category'] : '';
         $requestGroup    = $_GET['mc-group'] ?? false;
         $series_filter   = isset($_GET['mc-series']) ? $_GET['mc-series'] : '';

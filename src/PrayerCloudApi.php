@@ -295,7 +295,7 @@ class PrayerCloudApi
      *
      * @return string|null Raw response body or null on error
      */
-    private function authenticatedRequest($url, $method = 'GET', array $data = null)
+    private function authenticatedRequest($url, $method = 'GET', ?array $data = null)
     {
         $this->lastError = null;
 

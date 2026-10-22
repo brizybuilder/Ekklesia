@@ -80,8 +80,8 @@ class EventDetailPlaceholder extends PlaceholderAbstract
                     echo "<h2 class=\"brz-eventDetail__item--meta--title brz-ministryBrands__item--meta-title\">{$item['title']}</h2>";
                 }
                 if ($show_date) {
-                    $starttime = date($date_format, strtotime($item['eventstart']));
-                    $endtime = date($date_format, strtotime($item['eventend']));
+                    $starttime = date($date_format, strtotime($item['eventstart'] ?? ''));
+                    $endtime = date($date_format, strtotime($item['eventend'] ?? ''));
                     $frequency = $item['eventtimesremarks'];
 
                     echo "<h5 class=\"brz-eventDetail__item--meta--date brz-ministryBrands__item--meta-date\">{$frequency}, {$starttime} - {$endtime}</h5>";
